@@ -1,20 +1,23 @@
 ﻿using MadCompanyHR_API;
+using MadCompanyHRAdmin;
+using static MadCompanyHRAdmin.MadEmployeeType;
+
 
 Console.WriteLine("Welcome MadTaddy Company!");
 
-decimal totalSalary = 0;
 var employees = new List<IMadEmployee>();
-
 SeedData(employees);
+//decimal totalSalary = 0;
 
-foreach (var item in employees)
+
+/*foreach (var item in employees)
 {
   
     totalSalary += item.Salary; 
 
-}
+}*/
 
-Console.WriteLine($"Total Annual Salary (Include Bonus): {totalSalary}");
+Console.WriteLine($"Total Annual Salary (Include Bonus): {employees.Sum(t => t.Salary)}");
 
 
 Console.ReadKey();
@@ -92,4 +95,32 @@ public class HM : MadEmployeeBase
 {
     public override decimal Salary { get => base.Salary + (base.Salary * 0.05m); }
 
+}
+
+public static class MadEmployeeFactory
+{
+    public static IMadEmployee? GetEmployeeInstance(MadEmployeeType type, int id , string firstname , string lastname , decimal salary)
+    {
+        IMadEmployee? employee = null;
+
+        switch (type)
+        {
+            case MadEmployeeType.Teacher:
+                employee = new Teacher { Id = id, FirstName =firstname,LastName=lastname,Salary = salary };
+                break; 
+            case MadEmployeeType.HOD:
+                employee = new HOD { Id = id, FirstName =firstname,LastName=lastname,Salary = salary };
+                break; 
+            case MadEmployeeType.CEO:
+                employee = new CEO { Id = id, FirstName =firstname,LastName=lastname,Salary = salary };
+                break; 
+            case MadEmployeeType.HM:
+                employee = new HM { Id = id, FirstName =firstname,LastName=lastname,Salary = salary };
+                break; 
+            default:
+                break;
+        }
+
+        return employee;
+    }
 }
