@@ -33,8 +33,8 @@ static void SeedData(List<IMadEmployee?> employees)
     var headOfDepartment = MadEmployeeFactory.GetEmployeeInstance(MadEmployeeType.Teacher, 2, "Henry", "Marks", 8000);
     var ceo = MadEmployeeFactory.GetEmployeeInstance(MadEmployeeType.CEO, 4, "Elbert", "Esteins", 10000);
     var headMaster = MadEmployeeFactory.GetEmployeeInstance(MadEmployeeType.CEO, 5, "Elon", "Musk", 100000);
-  
-  
+
+
     employees.Add(teacher1);
     employees.Add(teacher2);
     employees.Add(headOfDepartment);
@@ -70,28 +70,35 @@ public class HM : MadEmployeeBase
 
 public static class MadEmployeeFactory
 {
-    public static IMadEmployee? GetEmployeeInstance(MadEmployeeType type, int id , string firstname , string lastname , decimal salary)
+    public static IMadEmployee GetEmployeeInstance(MadEmployeeType type, int id, string firstname, string lastname, decimal salary)
     {
         IMadEmployee? employee = null;
 
         switch (type)
         {
             case MadEmployeeType.Teacher:
-                employee = new Teacher { Id = id, FirstName =firstname,LastName=lastname,Salary = salary };
-                break; 
+                employee = FactoryPattern<IMadEmployee, Teacher>.GetInstance();
+                break;
             case MadEmployeeType.HOD:
-                employee = new HOD { Id = id, FirstName =firstname,LastName=lastname,Salary = salary };
-                break; 
+                employee = FactoryPattern<IMadEmployee, HOD>.GetInstance();
+                break;
             case MadEmployeeType.CEO:
-                employee = new CEO { Id = id, FirstName =firstname,LastName=lastname,Salary = salary };
-                break; 
+                employee = FactoryPattern<IMadEmployee, CEO>.GetInstance();
+                break;
             case MadEmployeeType.HM:
-                employee = new HM { Id = id, FirstName =firstname,LastName=lastname,Salary = salary };
-                break; 
+                employee = FactoryPattern<IMadEmployee, HM>.GetInstance();
+                break;
             default:
                 break;
         }
-
+        if (employee == null)
+        {
+            throw new NullReferenceException();
+        }
+        employee.Id = id;
+        employee.FirstName = firstname;
+        employee.LastName = lastname;
+        employee.Salary = salary;
         return employee;
     }
 }
