@@ -25,45 +25,16 @@ Console.ReadKey();
 
 
 
-static void SeedData(List<IMadEmployee> employees)
+static void SeedData(List<IMadEmployee?> employees)
 {
 
-    var teacher1 = new Teacher
-    {
-        Id = 1,
-        FirstName = "Kelly",
-        LastName = "Jones",
-        Salary = 4000
-    };
-    var teacher2 = new Teacher
-    {
-        Id = 2,
-        FirstName = "Celestine",
-        LastName = "Edwards",
-        Salary = 4000
-    };
-
-    var headOfDepartment = new HOD
-    {
-        Id = 3,
-        FirstName = "Henry",
-        LastName = "Marks",
-        Salary = 8000
-    };
-    var ceo = new CEO
-    {
-        Id = 4,
-        FirstName = "Elbert",
-        LastName = "Esteins",
-        Salary = 10000
-    };
-    var headMaster = new HM
-    {
-        Id = 5,
-        FirstName = "Elon",
-        LastName = "Musk",
-        Salary = 100000
-    };
+    var teacher1 = MadEmployeeFactory.GetEmployeeInstance(MadEmployeeType.Teacher, 1, "Kelly", "Jones", 4000);
+    var teacher2 = MadEmployeeFactory.GetEmployeeInstance(MadEmployeeType.Teacher, 2, "Celestine", "Edwards", 4000);
+    var headOfDepartment = MadEmployeeFactory.GetEmployeeInstance(MadEmployeeType.Teacher, 2, "Henry", "Marks", 8000);
+    var ceo = MadEmployeeFactory.GetEmployeeInstance(MadEmployeeType.CEO, 4, "Elbert", "Esteins", 10000);
+    var headMaster = MadEmployeeFactory.GetEmployeeInstance(MadEmployeeType.CEO, 5, "Elon", "Musk", 100000);
+  
+  
     employees.Add(teacher1);
     employees.Add(teacher2);
     employees.Add(headOfDepartment);
